@@ -33,6 +33,10 @@
         <include layout="@layout/holder_apply_filter" />
         
         <include layout="@layout/mic_string" />
+        
+        <include layout="@layout/crop" />
+        
+        <include layout="@layout/share" />
 
         <include layout="@layout/holder_hue" />
 

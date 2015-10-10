@@ -36,6 +36,8 @@
 		<item>sepia</item>
 		<item>horizontally</item>
 		<item>vertically</item>
+		<item>passport</item>
+		<item>ratio</item>
 	</string-array>
 
 </resources>

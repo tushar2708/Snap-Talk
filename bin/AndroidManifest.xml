@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="org.appsroid.fxpro"
+    package="org.hackathon.snapTalk"
     android:versionCode="1"
     android:versionName="1.1.0" >
 
@@ -21,16 +21,16 @@
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
-        android:largeHeap="true"
+        android:largeHeap="true" 
         android:theme="@android:style/Theme.Black.NoTitleBar"
         tools:ignore="UnusedAttribute" >
         <activity
-            android:name="org.appsroid.fxpro.MainActivity"
+            android:name="org.hackathon.snapTalk.MainActivity"
             android:label="@string/app_name" />
         <activity
-            android:name="org.appsroid.fxpro.PhotoActivity" />
+            android:name="org.hackathon.snapTalk.PhotoActivity" />
         <activity
-            android:name="org.appsroid.fxpro.SplashActivity"
+            android:name="org.hackathon.snapTalk.SplashActivity"
             android:label="@string/app_name"
             android:theme="@android:style/Theme.Black.NoTitleBar.Fullscreen" >
             <intent-filter>
@@ -39,6 +39,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name="com.soundcloud.android.crop.CropImageActivity" />
     </application>
 
 </manifest>

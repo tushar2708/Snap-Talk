@@ -3,6 +3,7 @@
 	<name>Snap-Talk</name>
 	<comment></comment>
 	<projects>
+		<project>corp-lib</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>

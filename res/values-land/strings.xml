@@ -59,5 +59,10 @@
     <string name="effect17">Vignette</string>
     <string name="effect18">Saturation</string>
     <string name="effect19">Contrast</string>
+    
+    <string name="speech_prompt">Say something&#8230;</string>
+    <string name="speech_not_supported">Sorry! Your device doesn\'t support speech input</string>
+    <string name="tap_on_mic">Let\'s talk</string>
+    <string name="crop">Crop</string>
 
 </resources>

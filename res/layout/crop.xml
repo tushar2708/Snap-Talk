@@ -1,0 +1,36 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_alignParentTop="true"
+    android:layout_marginTop="50dp"
+    android:layout_marginLeft="50dp"
+    android:clickable="true"
+    android:orientation="vertical"
+    >
+    
+    <!-- android:background="@drawable/bg_gradient" 
+		android:layout_above="@id/effects_holder"
+	-->
+
+        <ImageButton
+            android:id="@+id/btnCrop"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:adjustViewBounds="true"  
+            android:maxWidth="50dp"  
+ 			android:maxHeight="50dp"  
+            android:scaleType="fitCenter"
+            android:background="@null"
+            android:src="@drawable/ico_crop1" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/btnCrop"
+            android:text="@string/crop"
+            android:textColor="@color/white"
+            android:textSize="15sp"
+            android:textStyle="normal" />
+
+</RelativeLayout>
