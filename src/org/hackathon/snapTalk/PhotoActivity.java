@@ -1,7 +1,7 @@
 package org.hackathon.snapTalk;
 
 import com.soundcloud.android.crop.Crop;
-import com.soundcloud.android.crop.CropImageActivity;
+//import com.soundcloud.android.crop.CropImageActivity;
 
 import java.io.File;
 import java.lang.reflect.Method;
@@ -53,7 +53,7 @@ public class PhotoActivity extends Activity {
 	private ImageView image_holder;
 	private Bitmap last_bitmap;
 	private int source_id;
-	private Uri imageUri;
+	private Uri imageUri; 
 	private String imageUrl;
 	private LinearLayout btn_holder;
 	private ImageView undo_btn;
@@ -114,13 +114,17 @@ public class PhotoActivity extends Activity {
 	
 	private TextView txtSpeechInput;
 	private ImageButton btnSpeak;
-	private ImageButton btnShare;
+	
 	private ImageButton btnCrop;
 	int aspectX = 0, aspectY = 0;
 	
+	private ImageButton btnShare;
+	private ImageButton btnWhatsappShare;
+	private ImageButton btnFacebookShare;
+	private ImageButton btnTwitterShare;
 	
 	private final int REQ_CODE_SPEECH_INPUT = 100;
-	private final int CROP_PIC = 101;
+	//private final int CROP_PIC = 101;
 
 	private boolean save_status = false;
 
@@ -182,6 +186,10 @@ public class PhotoActivity extends Activity {
 		
 		btnShare = (ImageButton) findViewById(R.id.btnShare);
 		
+		btnWhatsappShare = (ImageButton) findViewById(R.id.btnWhatsApp);
+		btnFacebookShare = (ImageButton) findViewById(R.id.btnFaceBook);
+		btnTwitterShare = (ImageButton) findViewById(R.id.btnTwitter);
+		
 		btnSpeak.setOnClickListener(new View.OnClickListener() {
 
 			@Override
@@ -202,7 +210,30 @@ public class PhotoActivity extends Activity {
 
 			@Override
 			public void onClick(View v) {
-				promptSpeechInput();
+				shareGeneral("Shared Via Snap Talk, a voice guided image editing tool");
+			}
+		});
+		
+		btnWhatsappShare.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				shareViaWhatsapp("Shared on WhatsApp Via Snap Talk, a voice guided image editing tool");
+			}
+		});
+		
+		btnFacebookShare.setOnClickListener(new View.OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				shareViaFacebook("Shared on Facebook Via Snap Talk, a voice guided image editing tool");
+			}
+		});
+		
+		btnTwitterShare.setOnClickListener(new View.OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				shareViaTwitter("Shared on Twitter Via Snap Talk, a voice guided image editing tool");
 			}
 		});
 
@@ -393,8 +424,8 @@ public class PhotoActivity extends Activity {
 	
 	
 	private String handle_image(String property, String action,
-			String value) {
-		// TODO Auto-generated method stub
+			String value) 
+	{
 		String processed_effect = "";
 		
 		if(action.compareToIgnoreCase("rotate") == 0){
@@ -448,11 +479,31 @@ public class PhotoActivity extends Activity {
 			return null;
 		}
 		
+		else if(action.compareToIgnoreCase("share") == 0){
+			if (value.compareToIgnoreCase("WhatsApp") == 0)
+			{//TODO
+				shareViaWhatsapp("Shared on WhatsApp Via Snap Talk, a voice guided image editing tool");
+			}
+			else if (value.compareToIgnoreCase("Facebook") == 0)
+			{
+				shareViaFacebook("Shared on Facebook Via Snap Talk, a voice guided image editing tool");
+			}
+			else if (value.compareToIgnoreCase("Twitter") == 0)
+			{
+				shareViaTwitter("Shared on Twitter Via Snap Talk, a voice guided image editing tool");
+			}
+			else
+			{
+				shareGeneral("Shared Via Snap Talk, a voice guided image editing tool");
+			}
+			
+			return null;
+		}
+		
 		return null;
 	}
 	
 	private void promptCrop(int x, int y) {
-		// TODO Auto-generated method stub
 		String aspectRatio = (x == 0 || y == 0) ? ("Flexible" + "( I heard : " + x + " : " + y + " )") :  ("Fixed" + "(" + x + " : " + y + ")");
 		aspectRatio = (x == 0 && y == 0) ? ("Flexible") :  (aspectRatio);
 		txtSpeechInput.setText("Aspect Ratio : " + aspectRatio );
@@ -1752,6 +1803,67 @@ public class PhotoActivity extends Activity {
 		try {
 			loading_dialog.dismiss();
 		} catch (Exception e) {}
+	}
+	
+	/* Social Media Sharing Functions */
+	
+	public void shareViaFacebook(String message) {
+        String fullUrl = "https://m.facebook.com/sharer.php?u=..";
+        try {
+            Intent sharingIntent = new Intent(Intent.ACTION_SEND);
+            sharingIntent.setClassName("com.facebook.katana",
+                    "com.facebook.katana.ShareLinkActivity");
+            sharingIntent.putExtra(Intent.EXTRA_STREAM, imageUri);
+            sharingIntent.putExtra(Intent.EXTRA_TEXT, message);
+            startActivity(sharingIntent);
+
+        } catch (Exception e) {
+            Intent i = new Intent(Intent.ACTION_VIEW);
+            i.putExtra(Intent.EXTRA_STREAM, imageUri);
+            i.putExtra(Intent.EXTRA_TEXT, message);
+            i.setData(Uri.parse(fullUrl));
+            startActivity(i);
+        }
+    }
+	
+	public void shareViaTwitter(String message) {
+        //String message = "Edited using Snap Talk";
+        try {
+            Intent sharingIntent = new Intent(Intent.ACTION_SEND);
+            sharingIntent.setClassName("com.twitter.android","com.twitter.android.PostActivity");
+            sharingIntent.putExtra(Intent.EXTRA_STREAM, imageUri);
+            sharingIntent.putExtra(Intent.EXTRA_TEXT, message);
+            startActivity(sharingIntent);
+        } catch (Exception e) {
+            //Log.e("In Exception", "Comes here");
+            Intent i = new Intent();
+            i.putExtra(Intent.EXTRA_STREAM, imageUri);
+            i.putExtra(Intent.EXTRA_TEXT, message);
+            i.setAction(Intent.ACTION_VIEW);
+            i.setData(Uri.parse("https://mobile.twitter.com/compose/tweet"));
+            startActivity(i);
+        }
+    }
+	
+	public void shareViaWhatsapp(String message) {
+        //String message = "Edited using Snap Talk";
+        try {
+            Intent sharingIntent = new Intent(Intent.ACTION_SEND);
+            sharingIntent.setPackage("com.whatsapp");
+            sharingIntent.putExtra(Intent.EXTRA_STREAM, imageUri);
+            sharingIntent.putExtra(Intent.EXTRA_TEXT, message);
+            startActivity(sharingIntent);
+        } catch (Exception e) {
+            //Log.e("In Exception", "Comes here");
+        }
+    }
+	
+	private void shareGeneral(String message) {
+        Intent sharingIntent = new Intent(Intent.ACTION_SEND);
+        sharingIntent.setType("image/jpeg");
+        sharingIntent.putExtra(Intent.EXTRA_STREAM, imageUri);
+        sharingIntent.putExtra(Intent.EXTRA_TEXT, message);
+        startActivity(Intent.createChooser(sharingIntent, "Share picture with..."));
 	}
 
 }

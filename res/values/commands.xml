@@ -31,13 +31,14 @@
     	<item>grayscale</item>
 		<item>emboss</item>
 		<item>sketch</item>
-		<item>WhatsApp</item>
-		<item>Facebook</item>
 		<item>sepia</item>
 		<item>horizontally</item>
 		<item>vertically</item>
 		<item>passport</item>
 		<item>ratio</item>
+		<item>WhatsApp</item>
+		<item>Facebook</item>
+		<item>Twitter</item>
 	</string-array>
 
 </resources>
