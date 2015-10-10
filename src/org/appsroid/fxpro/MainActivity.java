@@ -27,7 +27,7 @@ public class MainActivity extends Activity {
 	private RelativeLayout step_number;
 	private Uri imageUri;
 	private boolean click_status = true;
-
+ 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);

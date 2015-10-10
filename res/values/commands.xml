@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+        <!-- Messages for the different numbers -->
+    <string-array name="action">
+		<item>increase</item>
+		<item>decrease</item>
+		<item>convert</item>
+		<item>rotate</item>
+		<item>flip</item>
+		<item>crop</item>
+		<item>share</item>
+		<item>add</item>
+		<item>save</item>
+		<item>invert</item>
+		<item>blur</item>
+		<item>undo</item>
+    </string-array>
+    
+    <string-array name="property">
+		<item>brightness</item>
+		<item>contrast</item>
+		<item>sharpness</item>
+		<item>hue</item>
+		<item>noise</item>
+		<item>saturation</item>
+		<item>image</item>
+    </string-array>
+
+    <string-array name="value">
+    	<item>grayscale</item>
+		<item>emboss</item>
+		<item>sketch</item>
+		<item>WhatsApp</item>
+		<item>Facebook</item>
+		<item>sepia</item>
+		<item>horizontally</item>
+		<item>vertically</item>
+	</string-array>
+
+</resources>

@@ -13,14 +13,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:contentDescription="@string/img_desc"
-        android:onClick="cancelSelectedEffect"
+        android:onClick="cancelSelectedEffect_ui"
         android:src="@drawable/ic_cancel" />
 
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:contentDescription="@string/img_desc"
-        android:onClick="setSelectedEffect"
+        android:onClick="setSelectedEffect_ui"
         android:src="@drawable/ic_accept" />
 
 </LinearLayout>

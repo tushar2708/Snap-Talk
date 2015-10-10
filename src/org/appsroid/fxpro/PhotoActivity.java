@@ -14,6 +14,8 @@ import org.appsroid.fxpro.dialog.LoadingDialog;
 import org.appsroid.fxpro.library.Constants;
 import org.appsroid.fxpro.library.Toaster;
 import org.appsroid.fxpro.library.UriToUrl;
+import org.appsroid.fxpro.speech.TokenizeVoiceCommand;
+import org.appsroid.fxpro.speech.CommandTokens;
 
 import android.app.Activity;
 import android.content.ActivityNotFoundException;
@@ -59,6 +61,8 @@ public class PhotoActivity extends Activity {
 	private LinearLayout apply_set;
 	private RelativeLayout toolbox;
 	private String selected_effect;
+	private String voice_command;
+	private CommandTokens tokanized_cmd;
 
 	private LoadingDialog loading_dialog;
 
@@ -214,7 +218,7 @@ public class PhotoActivity extends Activity {
 	/**
 	 * Showing google speech input dialog
 	 * */
-	private void promptSpeechInput() { 
+	private void promptSpeechInput() {
 		Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
 		intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL,
 				RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
@@ -243,14 +247,178 @@ public class PhotoActivity extends Activity {
 
 				ArrayList<String> result = data
 						.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
-				txtSpeechInput.setText(result.get(0));
+				voice_command = result.get(0);
+				
+				TokenizeVoiceCommand tokenizer = TokenizeVoiceCommand.getInstance(this);
+				tokanized_cmd =  tokenizer.resolveCommand(voice_command);
+				
+				//txtSpeechInput.setText(voice_command + " " + tokanized_cmd.action + " " +  tokanized_cmd.property + " " +  tokanized_cmd.value);
+				txtSpeechInput.setText(voice_command);
+
+				executeCommand(tokanized_cmd);
 			}
 			break;
 		}
 
 		}
 	}
+
+	private void executeCommand(CommandTokens tokanized_cmd) {
+		int needToApply = 0;
+		switch(tokanized_cmd.property){
+			case "brightness":
+				selected_effect = change_brightness(tokanized_cmd.property, tokanized_cmd.action, tokanized_cmd.value);
+				needToApply = 1;
+				break;
+				
+			case "contrast":
+				selected_effect = change_contrast(tokanized_cmd.property, tokanized_cmd.action, tokanized_cmd.value);
+				needToApply = 1;
+				break;
+			
+			case "saturation":
+				selected_effect = change_saturation(selected_effect, tokanized_cmd.action, tokanized_cmd.value);
+				needToApply = 1;
+				break;
+				
+			case "image":
+				selected_effect = handle_image(tokanized_cmd.property, tokanized_cmd.action, tokanized_cmd.value);
+				needToApply = 1;
+				break;
+				
+			case "save":
+					selected_effect = "brightness_200";
+					save_btn.performClick();
+					
+			case "undo":
+				selected_effect = "brightness_200";
+				undo_btn.performClick();
+				
+			default:
+				selected_effect = "";
+				needToApply = 0;
+		}
+		
+		if(needToApply == 1 && selected_effect != null)
+			applyEffect(selected_effect, true, true);
+		
+	}
+
+	private String change_brightness(String property, String action, String value) {
+		
+		String processed_effect = "";
+		int val = 0;
+		
+		if(action.compareToIgnoreCase("increase") == 0){
+			val = 200 + (2 * Integer.parseInt(value));
+			value = Integer.toString(val);
+			processed_effect = "brightness_" + value;
+		}
+		else if(action.compareToIgnoreCase("decrease") == 0){
+			val = 200 - (2 * Integer.parseInt(value));
+			value = Integer.toString(val);
+			processed_effect = "brightness_" + value;
+		}
+		return processed_effect;
+	}
+
+	private String change_contrast(String property, String action, String value) {
+		
+		String processed_effect = "";
+		int val = 0;
+		
+		if(action.compareToIgnoreCase("increase") == 0){
+			val = 50 + (2 * Integer.parseInt(value));
+			value = Integer.toString(val);
+			processed_effect = "contrast_" + value;
+		}
+		else if(action.compareToIgnoreCase("decrease") == 0){
+			val = 50 - (2 * Integer.parseInt(value));
+			value = Integer.toString(val);
+			processed_effect = "contrast_" + value;
+		}
+		return processed_effect;
+	}
 	
+	
+	private String change_saturation(String property, String action, String value) {
+		String processed_effect = "";
+		int val = 0;
+		
+		if(action.compareToIgnoreCase("increase") == 0){
+			val = 100 + (2 * Integer.parseInt(value));
+			value = Integer.toString(val);
+			processed_effect = "saturation_" + value;
+		}
+		else if(action.compareToIgnoreCase("decrease") == 0){
+			val = 100 - (2 * Integer.parseInt(value));
+			value = Integer.toString(val);
+			processed_effect = "saturation_" + value;
+		}
+		return processed_effect;
+	}
+	
+	
+	private String handle_image(String property, String action,
+			String value) {
+		// TODO Auto-generated method stub
+		String processed_effect = "";
+		
+		if(action.compareToIgnoreCase("rotate") == 0){
+			processed_effect = "flip_" + "f_f_" + value;
+			return processed_effect;
+		}
+		else if(action.compareToIgnoreCase("flip") == 0){
+			if(value.compareToIgnoreCase("horizontally") == 0)
+				processed_effect = "flip_" + "t_f_" + 0;
+			if(value.compareToIgnoreCase("vertically") == 0)
+				processed_effect = "flip_" + "f_t_" + 0;
+			return processed_effect;
+		}
+		else if(action.compareToIgnoreCase("convert") == 0){
+			if(value.compareToIgnoreCase("emboss") == 0){
+				processed_effect = value;
+				return processed_effect;
+			}
+			else if(value.compareToIgnoreCase("sketch") == 0){
+				processed_effect = value;
+				return processed_effect;
+			}
+			else if(value.compareToIgnoreCase("grayscale") == 0){
+				processed_effect = value;
+				return processed_effect;
+			}
+			else if(value.compareToIgnoreCase("sepia") == 0){
+				processed_effect = value;
+				return processed_effect;
+			}
+		}
+		else if(action.compareToIgnoreCase("invert") == 0){
+			processed_effect = action;
+			return processed_effect;
+		}
+		else if(action.compareToIgnoreCase("crop") == 0){
+			int x = 0, y = 0;
+			if(value.compareToIgnoreCase("pasport") == 0){
+				x = 3; y = 4;
+			} else {
+				x = Integer.parseInt(value);
+				y = Integer.parseInt(tokanized_cmd.others[1]);
+			}
+			
+			promptCrop(x, y);
+			
+			return processed_effect;
+		}
+		
+		return null;
+	}
+	
+	private void promptCrop(int x, int y) {
+		// TODO Auto-generated method stub
+		int z = 10;
+	}
+
 	public void toggleToolbox(View view) {
 		if (toolbox.getVisibility() == View.VISIBLE) {
 			toolbox.setVisibility(View.GONE);
@@ -358,9 +526,13 @@ public class PhotoActivity extends Activity {
 		boost_type = Integer.parseInt(view.getTag().toString());
 		modifyBoostHolder();
 		applyTempSelectedEffect();
+	} 
+
+	public void setSelectedEffect_ui(View view) {
+		setSelectedEffect();
 	}
 
-	public void setSelectedEffect(View view) {
+	public void setSelectedEffect(){
 		if (!loading_dialog.isShowing()) {
 
 			if (selected_effect.equals("tint")) {
@@ -372,7 +544,8 @@ public class PhotoActivity extends Activity {
 					bright_value.setOnSeekBarChangeListener(null);
 
 				} else {
-					selected_effect = selected_effect + "_" + bright_value.getProgress();			}
+					selected_effect = selected_effect + "_" + bright_value.getProgress();
+					}
 			}  else if (selected_effect.equals("contrast")) {
 				if (cont_value.getProgress() == 50) {
 
@@ -422,9 +595,14 @@ public class PhotoActivity extends Activity {
 			applyEffect(selected_effect, true, false);
 			hideEffectHolder();
 		}
+		
 	}
-
-	public void cancelSelectedEffect(View view) {
+	
+	public void cancelSelectedEffect_ui(View view) {
+		cancelSelectedEffect();
+	}
+	
+	public void cancelSelectedEffect() {
 		if (!loading_dialog.isShowing()) {
 			setImage(last_bitmap.copy(last_bitmap.getConfig(), true));
 
@@ -464,7 +642,8 @@ public class PhotoActivity extends Activity {
 				applyTempSelectedEffect();
 			}
 		} else {
-			applyEffect(effect, true, true);
+			applyTempSelectedEffect();
+			//applyEffect(effect, true, true);
 		}
 
 	}
@@ -1186,6 +1365,7 @@ public class PhotoActivity extends Activity {
 				Toaster.make(getApplicationContext(), R.string.save_failed);
 			}
 			backToMain();
+			//backToPicture();
 		}
 
 	}
@@ -1236,7 +1416,7 @@ public class PhotoActivity extends Activity {
 	@Override
 	public void onBackPressed() {
 		if (apply_set.getVisibility() == View.VISIBLE){
-			cancelSelectedEffect(null);
+			cancelSelectedEffect();
 		} else {
 			displayBackDialog();
 		}
@@ -1291,6 +1471,21 @@ public class PhotoActivity extends Activity {
 
 		finish();
 	}
+	
+/*
+	private void backToPicture(){
+		recycleBitmap();
+
+		if (loading_dialog.isShowing()) {
+			hideLoading();
+		}
+
+		Intent intent = new Intent(getApplicationContext(), PhotoActivity.class);
+		startActivity(intent);
+		overridePendingTransition(0, 0);
+
+	}
+*/
 
 	@SuppressWarnings("unused")
 	private void reloadImage() {
