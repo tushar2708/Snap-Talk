@@ -14,12 +14,11 @@
         android:onClick="toggleToolbox"
         android:clickable="true"
         android:contentDescription="@string/img_desc"
-        android:adjustViewBounds="true"  
-        android:maxWidth="500dp"  
- 		android:maxHeight="375dp"  
+        android:adjustViewBounds="true"
+        android:maxWidth="500dp"
+ 		android:maxHeight="375dp"
         android:scaleType="fitCenter"
         />
-    <!-- android:scaleType="centerInside" -->
 
     <RelativeLayout
         android:id="@+id/toolbox"
@@ -28,16 +27,16 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true" >
 
+
+        
+        <include layout="@layout/mic_string" />
+        
+        <include layout="@layout/holder_left" />
+        
         <include layout="@layout/holder_save" />
 
         <include layout="@layout/holder_apply_filter" />
         
-        <include layout="@layout/mic_string" />
-        
-        <include layout="@layout/crop" />
-        
-        <include layout="@layout/share" />
-
         <include layout="@layout/holder_hue" />
 
         <include layout="@layout/holder_saturation" />

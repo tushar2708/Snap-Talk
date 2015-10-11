@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/effects_top"
+    android:layout_width="80dp"
+    android:layout_height="match_parent"
+    android:layout_alignParentLeft="true"
+    android:background="#99000000"
+    android:paddingTop="3dp" >
+
+			<RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:layout_gravity="center"
+                android:layout_marginTop="5dp">
+
+                <ImageButton
+                    android:id="@+id/btnCrop"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:adjustViewBounds="true"  
+            		android:maxWidth="@dimen/top_button_diam"  
+ 					android:maxHeight="@dimen/top_button_diam"
+            		android:scaleType="fitCenter"
+                    android:layout_centerHorizontal="true"
+                    android:background="@null"
+                    android:contentDescription="@string/img_desc"
+                    android:src="@drawable/ico_crop1" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_below="@id/btnCrop"
+                    android:gravity="center"
+                    android:paddingBottom="5dp"
+                    android:paddingLeft="5dp"
+                    android:paddingRight="5dp"
+                    android:singleLine="true"
+                    android:text="@string/crop"
+                    android:textColor="#ffffff"
+                    android:textSize="16sp" />
+            </RelativeLayout>
+    
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+    			android:layout_alignParentBottom="true"
+    			android:layout_centerHorizontal="true"
+    			android:layout_gravity="center"
+                android:layout_marginBottom="5dp" >
+
+                <ImageButton
+                    android:id="@+id/btnShare"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:adjustViewBounds="true"  
+            		android:maxWidth="@dimen/top_button_diam"  
+ 					android:maxHeight="@dimen/top_button_diam"  
+            		android:scaleType="fitCenter"
+                    android:layout_centerHorizontal="true"
+                    android:background="@null"
+                    android:contentDescription="@string/img_desc"
+                    android:src="@drawable/ico_share" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_below="@id/btnShare"
+                    android:gravity="center"
+                    android:paddingBottom="5dp"
+                    android:paddingLeft="5dp"
+                    android:paddingRight="5dp"
+                    android:singleLine="true"
+                    android:text="@string/share"
+                    android:textColor="#ffffff"
+                    android:textSize="16sp" />
+            </RelativeLayout>
+
+
+
+</RelativeLayout>

@@ -129,7 +129,7 @@ public class PhotoActivity extends Activity {
 	private boolean save_status = false;
 
 	@Override
-	protected void onCreate(Bundle savedInstanceState) {
+	protected void onCreate(Bundle savedInstanceState) { 
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_photo);
 
@@ -185,11 +185,11 @@ public class PhotoActivity extends Activity {
 		btnCrop = (ImageButton) findViewById(R.id.btnCrop);
 		
 		btnShare = (ImageButton) findViewById(R.id.btnShare);
-		
+		/*
 		btnWhatsappShare = (ImageButton) findViewById(R.id.btnWhatsApp);
 		btnFacebookShare = (ImageButton) findViewById(R.id.btnFaceBook);
 		btnTwitterShare = (ImageButton) findViewById(R.id.btnTwitter);
-		
+		*/
 		btnSpeak.setOnClickListener(new View.OnClickListener() {
 
 			@Override
@@ -198,7 +198,7 @@ public class PhotoActivity extends Activity {
 			}
 		});
 		
-		btnCrop.setOnClickListener(new View.OnClickListener() {
+		btnCrop.setOnClickListener(new View.OnClickListener() { 
 
 			@Override
 			public void onClick(View v) {
@@ -213,7 +213,7 @@ public class PhotoActivity extends Activity {
 				shareGeneral("Shared Via Snap Talk, a voice guided image editing tool");
 			}
 		});
-		
+	/*	
 		btnWhatsappShare.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -236,7 +236,7 @@ public class PhotoActivity extends Activity {
 				shareViaTwitter("Shared on Twitter Via Snap Talk, a voice guided image editing tool");
 			}
 		});
-
+	 */
 		if (savedInstanceState == null) {
 			source_id = getIntent().getExtras().getInt(Constants.EXTRA_KEY_IMAGE_SOURCE);
 			imageUri = getIntent().getData();
@@ -481,16 +481,16 @@ public class PhotoActivity extends Activity {
 		
 		else if(action.compareToIgnoreCase("share") == 0){
 			if (value.compareToIgnoreCase("WhatsApp") == 0)
-			{//TODO
-				shareViaWhatsapp("Shared on WhatsApp Via Snap Talk, a voice guided image editing tool");
+			{
+				shareViaWhatsapp("Shared Via Snap Talk, a voice guided image editing tool");
 			}
 			else if (value.compareToIgnoreCase("Facebook") == 0)
 			{
-				shareViaFacebook("Shared on Facebook Via Snap Talk, a voice guided image editing tool");
+				shareViaFacebook("Shared Via Snap Talk, a voice guided image editing tool");
 			}
 			else if (value.compareToIgnoreCase("Twitter") == 0)
 			{
-				shareViaTwitter("Shared on Twitter Via Snap Talk, a voice guided image editing tool");
+				shareViaTwitter("Shared Via Snap Talk, a voice guided image editing tool");
 			}
 			else
 			{
@@ -500,16 +500,14 @@ public class PhotoActivity extends Activity {
 			return null;
 		}
 		
-		return null;
+		return null; 
 	}
 	
 	private void promptCrop(int x, int y) {
 		String aspectRatio = (x == 0 || y == 0) ? ("Flexible" + "( I heard : " + x + " : " + y + " )") :  ("Fixed" + "(" + x + " : " + y + ")");
 		aspectRatio = (x == 0 && y == 0) ? ("Flexible") :  (aspectRatio);
-		txtSpeechInput.setText("Aspect Ratio : " + aspectRatio );
-		beginCrop(imageUri);
-		//performCrop(imageUri);
-		
+		txtSpeechInput.setText("Aspect Ratio : " + aspectRatio);
+		beginCrop(imageUri);	
 	}
 	
     private void beginCrop(Uri source) {
@@ -1785,7 +1783,7 @@ public class PhotoActivity extends Activity {
 		outState.putParcelable(Constants.KEY_BITMAP, bitmap());
 	}
 
-	public void onClickEffectButton(View view){
+	public void onClickEffectButton(View view){ 
 		if (!loading_dialog.isShowing()) {
 			displayLoading();
 			if (effects.size() == 0) {
